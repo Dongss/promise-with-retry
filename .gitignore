@@ -1,0 +1,8 @@
+*.swp
+node_modules
+typings
+dist
+.vscode
+.nyc_output
+coverage
+npm-debug.log*

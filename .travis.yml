@@ -1,0 +1,16 @@
+language: node_js                                                             
+node_js:
+  - '7'
+  - '6'
+  - '5'
+  - '4'
+cache:
+  directories:
+    - $HOME/.npm
+    - node_modules
+before_install:
+  - 'npm install --global npm'
+before_script:
+  - 'npm prune'
+after_success:
+  - './node_modules/.bin/nyc report --reporter=text-lcov > coverage.lcov && ./node_modules/.bin/codecov'

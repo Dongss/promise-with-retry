@@ -1,5 +1,7 @@
 # promise-with-retry
 
+[![Build Status](https://travis-ci.org/Dongss/promise-with-retry.svg?branch=master)](https://travis-ci.org/Dongss/promise-with-retry)
+
 Easily retry function that returns a `Promise`, and it's synchronous execution.
 
 ## Install

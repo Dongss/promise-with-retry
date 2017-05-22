@@ -1,6 +1,7 @@
 # promise-with-retry
 
 [![Build Status](https://travis-ci.org/Dongss/promise-with-retry.svg?branch=master)](https://travis-ci.org/Dongss/promise-with-retry)
+[![Coverage Status](https://coveralls.io/repos/github/Dongss/promise-with-retry/badge.svg?branch=master)](https://coveralls.io/github/Dongss/promise-with-retry?branch=master)
 
 Easily retry function that returns a `Promise`, and it's synchronous execution.
 

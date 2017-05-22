@@ -1,50 +1,50 @@
 {
-    "name": "promise-with-retry",
-    "version": "1.0.0",
-    "description": "",
-    "main": "dist/index.js",
-    "scripts": {
-        "dev": "tsc -w",
-        "lint": "tslint '*.ts'",
-        "build": "tsc",
-        "prepublish": "npm run build",
-        "ava": "nyc node --harmony node_modules/.bin/ava dist/index.test.js --serial --verbose",
-        "test": "npm run lint && npm run build && npm run ava"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Dongss/promise-with-retry.git"
-    },
-    "author": {
-        "name": "Shaoshuai Dong",
-        "email": "dongsoso@hotmail.com",
-        "url": "https://github.com/Dongss"
-    },
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/Dongss/promise-with-retry/issues"
-    },
-    "homepage": "https://github.com/Dongss/promise-with-retry#readme",
-    "typings": "index.d.ts",
-    "engines": {
-        "node": ">= 4.0.0"
-    },
-    "devDependencies": {
-        "ava": "^0.16.0",
-        "codecov": "^2.2.0",
-        "nyc": "^10.3.2",
-        "tslint": "^5.2.0",
-        "typescript": "^2.3.2"
-    },
-    "nyc": {
-        "reporter": [
-            "html",
-            "lcov",
-            "text"
-        ],
-        "exclude": [
-            "node_modules",
-            "**/*.test.*"
-        ]
-    }
+  "name": "promise-with-retry",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsc -w",
+    "lint": "tslint '*.ts'",
+    "build": "tsc",
+    "prepublish": "npm run build",
+    "ava": "nyc node --harmony node_modules/.bin/ava dist/index.test.js --serial --verbose",
+    "test": "npm run lint && npm run build && npm run ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dongss/promise-with-retry.git"
+  },
+  "author": {
+    "name": "Shaoshuai Dong",
+    "email": "dongsoso@hotmail.com",
+    "url": "https://github.com/Dongss"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Dongss/promise-with-retry/issues"
+  },
+  "homepage": "https://github.com/Dongss/promise-with-retry#readme",
+  "typings": "index.d.ts",
+  "engines": {
+    "node": ">= 4.0.0"
+  },
+  "devDependencies": {
+    "ava": "^0.16.0",
+    "coveralls": "^2.13.1",
+    "nyc": "^10.3.2",
+    "tslint": "^5.2.0",
+    "typescript": "^2.3.2"
+  },
+  "nyc": {
+    "reporter": [
+      "html",
+      "lcov",
+      "text"
+    ],
+    "exclude": [
+      "node_modules",
+      "**/*.test.*"
+    ]
+  }
 }

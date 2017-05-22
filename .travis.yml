@@ -11,4 +11,4 @@ before_install:
 before_script:
   - 'npm prune'
 after_success:
-  - './node_modules/.bin/nyc report --reporter=text-lcov > coverage.lcov && ./node_modules/.bin/codecov'
+  - 'cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js'

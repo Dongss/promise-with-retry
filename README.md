@@ -97,6 +97,10 @@ async function main() {
 }
 ```
 
-## test
+## Test
 
 `npm test`
+
+## Notes
+
+Somehow the execution with `promise-with-retry` is delayed,  `promise-with-retry` is unsuited if you have strict requirements on time.

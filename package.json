@@ -36,6 +36,11 @@
         "typescript": "^2.3.2"
     },
     "nyc": {
+        "reporter": [
+            "html",
+            "lcov",
+            "text"
+        ],
         "exclude": [
             "node_modules",
             "**/*.test.*"

@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/Dongss/promise-with-retry.svg?branch=master)](https://travis-ci.org/Dongss/promise-with-retry)
 [![Coverage Status](https://coveralls.io/repos/github/Dongss/promise-with-retry/badge.svg?branch=master)](https://coveralls.io/github/Dongss/promise-with-retry?branch=master)
+[![Dependency Status](https://dependencyci.com/github/Dongss/promise-with-retry/badge)](https://dependencyci.com/github/Dongss/promise-with-retry)
 
 Easily retry function that returns a `Promise`, and it's synchronous execution.
 
@@ -12,6 +13,17 @@ Easily retry function that returns a `Promise`, and it's synchronous execution.
 ## Usage
 
 `promiseWithRetry(...args)(f, opt)`
+
+options usage:
+
+```
+rPromise.promiseWithRetry(5000)(sleep, {
+    interval: 100,
+    maxCount: 3,
+    maxTime: 1,
+    mode: 'CONST'
+})
+```
 
 * ...args, args of function `f`
 * f, function that return `Promise`
@@ -61,7 +73,7 @@ rPromise.promiseWithRetry(1000)(sleep)
 });
 ```
 
-typescript usage:
+typescript example:
 
 ```
 import * as rPromise from 'promise-with-retry';
@@ -77,13 +89,12 @@ function sleep(ms: number) {
 async function main() {
     try {
         let result = await rPromise.promiseWithRetry(100)(sleep);
+        // { count: 1, result: 1024 }
         console.log(result);
     } catch (e) {
         console.log(e)
     }
 }
-
-await main();  // { count: 1, result: 1024 }
 ```
 
 ## test

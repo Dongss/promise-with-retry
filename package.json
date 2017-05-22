@@ -31,6 +31,7 @@
     },
     "devDependencies": {
         "ava": "^0.16.0",
+        "codecov": "^2.2.0",
         "nyc": "^10.3.2",
         "tslint": "^5.2.0",
         "typescript": "^2.3.2"

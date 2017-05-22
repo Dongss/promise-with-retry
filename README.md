@@ -79,11 +79,11 @@ typescript example:
 import * as rPromise from 'promise-with-retry';
 
 function sleep(ms: number) {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(1024);
-    }, ms);
-  });
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve(1024);
+        }, ms);
+    });
 }
 
 async function main() {

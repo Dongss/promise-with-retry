@@ -5,11 +5,11 @@
         "sourceMap": true,
         "module": "commonjs",
         "removeComments": true,
+        "declaration": true,
         "noImplicitAny": true
     },
     "files": [
         "index.ts",
-        "index.test.ts",
-        "index.d.ts"
+        "index.test.ts"
     ]
 }

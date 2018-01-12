@@ -1,5 +1,9 @@
 # promise-with-retry
 
+-[![Build Status](https://travis-ci.org/Dongss/promise-with-retry.svg?branch=master)](https://travis-ci.org/Dongss/promise-with-retry)
+ -[![Coverage Status](https://coveralls.io/repos/github/Dongss/promise-with-retry/badge.svg?branch=master)](https://coveralls.io/github/Dongss/promise-with-retry?branch=master)
+ -[![Dependency Status](https://dependencyci.com/github/Dongss/promise-with-retry/badge)](https://dependencyci.com/github/Dongss/promise-with-retry)
+
 Easily retry operations with any retry strategy you want.
 
 Support async functions or functions returned Promise.
@@ -113,8 +117,10 @@ async function asyncOperation(ms: number) {
 let myAsyncOp = RetryOp.buildOperation(asyncOperation);
 let myRetry = new RetryOp(myAsyncOp(500), (retryOptions) => {
     if (retryOptions.totalRetryCount < 3) {
+        // will retry after 500ms
         return 500;
     }
+    // stop retry
     return;
 });
 

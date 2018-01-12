@@ -1,62 +1,87 @@
-export interface PRetryOpt {
-  interval?: number; // ms
-  maxCount?: number;
-  maxTime?: number; // max total time. seconds
-  base?: number;
-  mode?: 'EXPONET' | 'CONST';
+import * as events from 'events';
+
+enum RetryEvents {
+    OP_DONE = 'op_resolve',
+    OP_ERROR = 'op_reject',
+    RETREY = 'retry',
+    FINISH = 'finish',
 }
 
-export interface PRetryResult {
-  count: number;
-  result: any;
+export type Operation = (...args: any[]) => any;
+
+export interface RetryOptions {
+    startTime: number; // ms
+    totalRetryCount: number;
+    returns: {
+        error: any;
+        data?: any;
+    };
 }
 
-export const defaultRetryOpt: PRetryOpt = {
-  interval: 2000, // 2s
-  maxCount: 5, // max execute count
-  base: 2,
-  mode: 'EXPONET',
-};
+export type RetryStrategy = (option: RetryOptions) => any;
 
 function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-/**
- * build promise with retry
- * synchronous execution
- *
- * @export
- * @param {...any[]} args, arguments of function f()
- * @returns {(f: (...p: any[]) => Promise<any>, opt?: PRetryOpt) => Promise<PRetryResult>}
- */
-export function promiseWithRetry(...args: any[])
-: (f: (...p: any[]) => Promise<any>, opt?: PRetryOpt) => Promise<PRetryResult> {
-  let ctx = this;
-  let count: number = 1;
-  let fe: any[] = [];
-  let startTime = Math.floor(Date.now() / 1000);
-
-  return async function(f: (...p: any[]) => Promise<any>, opt?: PRetryOpt): Promise<PRetryResult> {
-    if (typeof f !== 'function') {
-      throw new Error('param [f] must be a function');
-    }
-    let _opt: PRetryOpt = Object.assign(defaultRetryOpt, opt);
-
-    while (count <= _opt.maxCount && (_opt.maxTime ? (Math.floor(Date.now() / 1000) <= startTime) : true)) {
-      try {
-        let result: any = await f.apply(ctx, args);
-        return {
-          count: count,
-          result: result
+export default class RetryOp extends events.EventEmitter {
+    private op: Operation = null;
+    private retryOptions: RetryOptions;
+    private retryStrategy: RetryStrategy;
+    constructor(op: Operation, retryStrategy: RetryStrategy) {
+        super();
+        this.op = op;
+        this.retryStrategy = retryStrategy;
+        this.retryOptions = {
+            startTime: Date.now(),
+            totalRetryCount: 0,
+            returns: {
+                error: null
+            }
         };
-      } catch (e) {
-        fe.push(e);
-        await sleep(_opt.mode === 'CONST' ? _opt.interval : _opt.interval * Math.pow(_opt.base, count - 1));
-        count ++;
-      }
+        this.run();
     }
-
-    return Promise.reject(fe);
-  };
+    static buildOperation(fn: Operation) {
+        return function(...args: any[]) {
+            return function() {
+                return fn.apply(fn, args);
+            };
+        };
+    }
+    private run() {
+        if (!this.op || typeof this.op !== 'function') {
+            throw new Error('Operation must be a function');
+        }
+        this.op().then((...args: any[]) => {
+            this.onResolve.apply(this, args);
+        }).catch((e: any) => {
+            this.onReject.call(this, e);
+        });
+    }
+    private onResolve(...args: any[]) {
+        this.retryOptions.returns.error = null;
+        this.retryOptions.returns.data = args[0];
+        this.emit(RetryEvents.OP_DONE, this.retryOptions, args[0]);
+        this.onceDone();
+    }
+    private onReject(error: any) {
+        this.retryOptions.returns.error = error;
+        this.retryOptions.returns.data = null;
+        this.emit(RetryEvents.OP_ERROR, this.retryOptions, error);
+        this.onceDone();
+    }
+    private async retry(timeout: number) {
+        this.retryOptions.totalRetryCount++;
+        await sleep(timeout);
+        this.emit(RetryEvents.RETREY, this.retryOptions);
+        this.run();
+    }
+    private onceDone() {
+        let timeout = this.retryStrategy(this.retryOptions);
+        if (typeof timeout === 'number') {
+            this.retry(timeout);
+        } else {
+            this.emit(RetryEvents.FINISH, this.retryOptions);
+        }
+    }
 }

@@ -1,8 +1,8 @@
 # promise-with-retry
 
--[![Build Status](https://travis-ci.org/Dongss/promise-with-retry.svg?branch=master)](https://travis-ci.org/Dongss/promise-with-retry)
- -[![Coverage Status](https://coveralls.io/repos/github/Dongss/promise-with-retry/badge.svg?branch=master)](https://coveralls.io/github/Dongss/promise-with-retry?branch=master)
- -[![Dependency Status](https://dependencyci.com/github/Dongss/promise-with-retry/badge)](https://dependencyci.com/github/Dongss/promise-with-retry)
+[![Build Status](https://travis-ci.org/Dongss/promise-with-retry.svg?branch=master)](https://travis-ci.org/Dongss/promise-with-retry)
+[![Coverage Status](https://coveralls.io/repos/github/Dongss/promise-with-retry/badge.svg?branch=master)](https://coveralls.io/github/Dongss/promise-with-retry?branch=master)
+[![Dependency Status](https://dependencyci.com/github/Dongss/promise-with-retry/badge)](https://dependencyci.com/github/Dongss/promise-with-retry)
 
 Easily retry operations with any retry strategy you want.
 

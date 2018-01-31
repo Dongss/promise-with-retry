@@ -1,7 +1,7 @@
 {
   "name": "promise-with-retry",
-  "version": "2.0.0",
-  "description": "",
+  "version": "2.0.1",
+  "description": "Easily retry operations with any retry strategy you want.",
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsc -w",
